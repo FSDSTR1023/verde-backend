@@ -1,39 +1,48 @@
+import bcrypt from "bcryptjs";
 import { PhotographerModel } from "../models/photographer.model.js";
+import { photographerToObject } from "../helpers/photographerToObject.js";
 
 
 export const register = async (req, res) => {
 
     const { name, surname, email, password } = req.body;
 
-    console.log({ name });
-    console.log({ surname });
-    console.log({ email });
-    console.log({ password });
+    // Añadí una pequeña verificación para asegurarme de que el usuario ingresa todos los datos
+    if (!name || !surname || !email || !password) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'Faltan datos. Debes ingresar: name, surname, email y password',
+        });
+    }
 
     try {
 
         const exitPhotographer = await PhotographerModel.findOne({ email });
-
         if (exitPhotographer) {
             return res.status(404).json({
                 ok: false,
-                msg: 'Email ya exite'
-            })
+                msg: `El email: ${email} ya está registrado`
+            });
         }
 
-        const photographer = new PhotographerModel({
+        // Antes de guardar la contraseña en la base de datos, voy a 'hashearla' por seguridad, en el endpoint del '/login' habrá que hacer la comparación de la siguiente manera: const isCorrectPassword = compareSync(contraseñaDesdeElFront, contraseñaEnBaseDeDatos) 
+        const securePassword = bcrypt.hashSync(password);
+
+        const photographer = await PhotographerModel.create({
             name,
             surname,
             email,
-            password
+            password: securePassword
         });
-
         await photographer.save();
+
+        // No quiero que la contraseña le llegue al front, por eso a través de desestructuración saco la contraseña y devuelvo lo demás (sin la contraseña) a través de la variable photographerResponse. He creado un helper para no escribir tanto, está la carpeta llamada helpers
+        const photographerResponse = photographerToObject(photographer);
 
         res.status(201).json({
             ok: true,
             msg: 'Fotógrafo creado correctamente',
-            photographer: [photographer]
+            photographer: [photographerResponse]
         })
 
     } catch (error) {
@@ -43,7 +52,7 @@ export const register = async (req, res) => {
         res.status(500).json({
             ok: false,
             msg: 'Error no controlado, notificar al administrador',
-            error
+            error,
         })
 
     }

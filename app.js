@@ -13,4 +13,11 @@ app.use('/', router)
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, console.log(`👂 in http://localhost:${PORT}`));
+//? https://www.youtube.com/watch?v=MzDtfEBWMVI Esto es solo una curiosidad: si como puerto se pone el puerto 0, entonces lo que hace node es escuchar en un puerto random libre. Si queréis probarlo, comentad esta línea 👇 y descomentad la de más abajo.
+app.listen(PORT, console.log(`👂 in http://localhost:${PORT}`))
+
+/*
+app.listen(0, function () {
+    console.log(`👂 in http://localhost:${this.address().port}`)
+});
+*/

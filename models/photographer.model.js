@@ -24,4 +24,6 @@ const photographerSchema = new Schema({
     },
 });
 
+// TODO: Hay que crear el schema del cliente para poder asociarlo al photographerSchema y viceversa
+
 export const PhotographerModel = model("Photographer", photographerSchema);

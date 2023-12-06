@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { register } from "../controllers/photographer.controller.js";
-import { photographer } from "../controllers/photographer.controller.js";
+import { edit, register, photographer } from "../controllers/photographer.controller.js";
 
 const router = Router();
 
-router.post('/register', register)
+router.post('/register', register);
 
-router.get('/photographer/:id', photographer)
+router.get('/photographer/:id', photographer);
+
+router.put('/photographer/:id', edit);
 
 export default router;

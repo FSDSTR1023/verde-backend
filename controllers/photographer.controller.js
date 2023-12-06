@@ -17,8 +17,8 @@ export const register = async (req, res) => {
 
     try {
 
-        const exitPhotographer = await PhotographerModel.findOne({ email });
-        if (exitPhotographer) {
+        const existPhotographer = await PhotographerModel.findOne({ email });
+        if (existPhotographer) {
             return res.status(404).json({
                 ok: false,
                 msg: `El email: ${email} ya está registrado`
@@ -53,10 +53,9 @@ export const register = async (req, res) => {
             ok: false,
             msg: 'Error no controlado, notificar al administrador',
             error,
-        })
-
+        });
     }
-}
+};
 
 
 
@@ -75,10 +74,12 @@ export const photographer = async (req, res) => {
             });
         }
 
+        // FIXME: Hola, Maribel. ¿Qué te parece si antes de devolverle la información al usuario, hacemos: const getPhotographerResponse = photographerToObject(getPhotographer); así no les llega el __v ni la contraseña?
+
         res.status(200).json({
             ok: true,
             msg: 'Fotógrafo obtenido correctamente',
-            photographer: getPhotographer 
+            photographer: getPhotographer
         });
 
     } catch (error) {
@@ -87,7 +88,54 @@ export const photographer = async (req, res) => {
         res.status(500).json({
             ok: false,
             msg: 'Error no controlado, notificar al administrador',
-            error: error.message 
+            error: error.message
+        });
+    }
+};
+
+export const edit = async (req, res) => {
+
+    const { id } = req.params;
+    //? para editar el password, necesitaremos validaciones extra, verdad?
+    const { name, surname, email, /* password */ } = req.body;
+
+
+    try {
+        const [existId, existEmail] = await Promise.all([
+            PhotographerModel.findById(id),
+            PhotographerModel.findOne({ email }),
+        ])
+
+        if (!existId) {
+            return res.status(404).json({
+                ok: false,
+                msg: `El id: ${id} no existe`
+            });
+        }
+
+        if (existEmail && existId.email !== email) {
+            return res.status(404).json({
+                ok: false,
+                msg: `El email: ${email} ya está registrado`
+            });
+        }
+
+        const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { name, surname, email }, { new: true });
+
+        const putPhotographerResponse = photographerToObject(putPhotographer);
+
+        res.status(200).json({
+            ok: true,
+            msg: `Fotógrafo con id: ${id}, fue editado`,
+            photographer: [putPhotographerResponse]
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error no controlado, notificar al administrador',
+            error: error.message
         });
     }
 };

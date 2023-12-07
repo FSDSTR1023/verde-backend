@@ -49,6 +49,7 @@ export class Photographer {
 
         } catch (error) {
 
+<<<<<<< HEAD
             console.log(error);
 
         res.status(500).json({

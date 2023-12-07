@@ -77,11 +77,11 @@ export class Photographer {
             }
 
             // FIXME: Hola, Maribel. ¿Qué te parece si antes de devolverle la información al usuario, hacemos: const getPhotographerResponse = photographerToObject(getPhotographer); así no les llega el __v ni la contraseña?
-
+            const getPhotographerResponse = photographerToObject(getPhotographer);
             res.status(200).json({
                 ok: true,
                 msg: 'Fotógrafo obtenido correctamente',
-                photographer: getPhotographer
+                photographer: [getPhotographerResponse]
             });
 
         } catch (error) {

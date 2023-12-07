@@ -65,7 +65,7 @@ export class Photographer {
 
         // Añadí una pequeña verificación para asegurarme de que el usuario ingresa email y password correctos
         if (!email || !password) {
-            return res.status(400).json({
+            return res.status(401).json({
                 ok: false,
                 msg: 'email o password no correcto',
             });
@@ -77,26 +77,27 @@ export class Photographer {
             if (!existPhotographer) {
                 return res.status(404).json({
                     ok: false,
-                    msg: `El email: ${email} no es correcto`
+                    msg: `email o password no correcto`
                 });
             }
 
             // Antes de guardar la contraseña en la base de datos, voy a 'hashearla' por seguridad, en el endpoint del '/login' habrá que hacer la comparación de la siguiente manera: const isCorrectPassword = bcrypt.compareSync(contraseñaDesdeElFront, contraseñaEnBaseDeDatos) 
-            const securePassword = bcrypt.hashSync(password);
+            const isCorrectPassword = bcrypt.compareSync(password, existPhotographer.password);
 
-            const photographer = await PhotographerModel.create({
-               
-                email,
-                password: securePassword
+            if (!isCorrectPassword) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'email o password no correcto',
             });
-            await photographer.save();
+            }
+
 
             // No quiero que la contraseña le llegue al front, por eso a través de desestructuración saco la contraseña y devuelvo lo demás (sin la contraseña) a través de la variable photographerResponse. He creado un helper para no escribir tanto, está la carpeta llamada helpers
-            const photographerResponse = photographerToObject(photographer);
+            const photographerResponse = photographerToObject(existPhotographer);
 
             res.status(201).json({
                 ok: true,
-                msg: 'contraseña correcta',
+                msg: 'contraseña y usuario correctos',
                 photographer: [photographerResponse]
             })
 

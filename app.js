@@ -4,8 +4,6 @@ import { connectDB } from "./database/mongo.database.js";
 import routerPhotographer from "./routes/photographer.route.js";
 import cors from "cors";
 
-
-
 await connectDB();
 
 const app = express();

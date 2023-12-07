@@ -160,7 +160,6 @@ export class Photographer {
         const { id } = req.params;
         //? para editar el password, necesitaremos validaciones extra, verdad?
         const { name, surname, email, /* password */ } = req.body; //! Brayan no necesita esto
-        const auth = req.headers?.authorization;
 
         if (!auth) {
             return res.status(401).json({
@@ -181,7 +180,7 @@ export class Photographer {
         try {
             const [existId, existEmail] = await Promise.all([
                 PhotographerModel.findById(id),
-                PhotographerModel.findOne({ email }), //! Brayan no necesita esto
+                PhotographerModel.findOne({ email }),//! Brayan no necesita esto
             ])
 
             if (!existId) {
@@ -191,12 +190,12 @@ export class Photographer {
                 });
             }
 
-            if (existEmail && existId.email !== email) { //! Brayan no necesita esto
-                return res.status(404).json({ //! Brayan no necesita esto
-                    ok: false, //! Brayan no necesita esto
-                    msg: `El email: ${email} ya está registrado` //! Brayan no necesita esto
-                }); //! Brayan no necesita esto
-            } //! Brayan no necesita esto
+            if (existEmail && existId.email !== email) {//! Brayan no necesita esto
+                return res.status(404).json({//! Brayan no necesita esto
+                    ok: false,//! Brayan no necesita esto
+                    msg: `El email: ${email} ya está registrado`//! Brayan no necesita esto
+                });//! Brayan no necesita esto
+            }//! Brayan no necesita esto
 
 
             // const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { isDeleted: true }, { new: true });

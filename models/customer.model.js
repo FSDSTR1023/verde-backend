@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const photographerSchema = new Schema({
+const customerSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -18,20 +18,19 @@ const photographerSchema = new Schema({
         unique: true,
         lowercase: true,
     },
-    password: {
+    address: {
+        type: String,
+    },
+    phone: {
         type: String,
         required: true,
     },
-    customers: [{
-        type: Schema.Types.ObjectId,
-        ref: "Customer"
-    }],
     isDeleted: {
         type: Boolean,
         default: false
-    },
+    }
 },
     { timestamps: true }
 );
 
-export const PhotographerModel = model("Photographer", photographerSchema);
+export const CustomerModel = model("Customer", customerSchema);

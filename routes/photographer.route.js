@@ -5,6 +5,8 @@ const routerPhotographer = Router();
 
 routerPhotographer.post('/register', Photographer.register);
 
+routerPhotographer.post('/login', Photographer.login);
+
 routerPhotographer.get('/:id', Photographer.getById);
 
 routerPhotographer.put('/:id', Photographer.edit);

@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import { connectDB } from "./database/mongo.database.js";
-import router from "./routes/photographer.route.js";
+import routerPhotographer from "./routes/photographer.route.js";
 
 await connectDB();
 
@@ -9,7 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/', router)
+app.use('/photographer', routerPhotographer)
 
 const PORT = process.env.PORT || 3000;
 

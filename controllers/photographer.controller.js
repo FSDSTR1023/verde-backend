@@ -27,7 +27,7 @@ export class Photographer {
                 });
             }
 
-            // Antes de guardar la contraseña en la base de datos, voy a 'hashearla' por seguridad, en el endpoint del '/login' habrá que hacer la comparación de la siguiente manera: const isCorrectPassword = compareSync(contraseñaDesdeElFront, contraseñaEnBaseDeDatos) 
+            // Antes de guardar la contraseña en la base de datos, voy a 'hashearla' por seguridad, en el endpoint del '/login' habrá que hacer la comparación de la siguiente manera: const isCorrectPassword = bcrypt.compareSync(contraseñaDesdeElFront, contraseñaEnBaseDeDatos) 
             const securePassword = bcrypt.hashSync(password);
 
             const photographer = await PhotographerModel.create({
@@ -76,7 +76,6 @@ export class Photographer {
                 });
             }
 
-            // FIXME: Hola, Maribel. ¿Qué te parece si antes de devolverle la información al usuario, hacemos: const getPhotographerResponse = photographerToObject(getPhotographer); así no les llega el __v ni la contraseña?
             const getPhotographerResponse = photographerToObject(getPhotographer);
             res.status(200).json({
                 ok: true,

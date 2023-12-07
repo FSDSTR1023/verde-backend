@@ -3,7 +3,6 @@ import express from "express";
 import { connectDB } from "./database/mongo.database.js";
 import routerPhotographer from "./routes/photographer.route.js";
 import cors from "cors";
-import { Photographer } from "./controllers/photographer.controller.js";
 
 await connectDB();
 

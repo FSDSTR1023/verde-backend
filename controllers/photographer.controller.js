@@ -85,10 +85,10 @@ export class Photographer {
             const isCorrectPassword = bcrypt.compareSync(password, existPhotographer.password);
 
             if (!isCorrectPassword) {
-            return res.status(401).json({
-                ok: false,
-                msg: 'email o password no correcto',
-            });
+                return res.status(401).json({
+                    ok: false,
+                    msg: 'email o password no correcto',
+                });
             }
 
 
@@ -151,13 +151,13 @@ export class Photographer {
 
         const { id } = req.params;
         //? para editar el password, necesitaremos validaciones extra, verdad?
-        const { name, surname, email, /* password */ } = req.body;
+        const { name, surname, email, /* password */ } = req.body; //! Brayan no necesita esto
 
 
         try {
             const [existId, existEmail] = await Promise.all([
                 PhotographerModel.findById(id),
-                PhotographerModel.findOne({ email }),
+                PhotographerModel.findOne({ email }),//! Brayan no necesita esto
             ])
 
             if (!existId) {
@@ -167,20 +167,22 @@ export class Photographer {
                 });
             }
 
-            if (existEmail && existId.email !== email) {
-                return res.status(404).json({
-                    ok: false,
-                    msg: `El email: ${email} ya está registrado`
-                });
-            }
+            if (existEmail && existId.email !== email) {//! Brayan no necesita esto
+                return res.status(404).json({//! Brayan no necesita esto
+                    ok: false,//! Brayan no necesita esto
+                    msg: `El email: ${email} ya está registrado`//! Brayan no necesita esto
+                });//! Brayan no necesita esto
+            }//! Brayan no necesita esto
 
-            const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { name, surname, email }, { new: true });
+
+            // const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+            const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { name, surname, email }, { new: true }); //! necesitas solo la línea de arriba
 
             const putPhotographerResponse = photographerToObject(putPhotographer);
 
             res.status(200).json({
                 ok: true,
-                msg: `Fotógrafo con id: ${id}, fue editado`,
+                msg: `Fotógrafo con id: ${id}, fue editado`, //! brayan tiene que cambiar este mensaje
                 photographer: [putPhotographerResponse]
             });
 

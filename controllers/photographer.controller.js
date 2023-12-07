@@ -59,6 +59,59 @@ export class Photographer {
         }
     };
 
+    static login = async (req, res) => {
+
+        const { email, password } = req.body;
+
+        // Añadí una pequeña verificación para asegurarme de que el usuario ingresa email y password correctos
+        if (!email || !password) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'email o password no correcto',
+            });
+        }
+
+        try {
+
+            const existPhotographer = await PhotographerModel.findOne({ email });
+            if (!existPhotographer) {
+                return res.status(404).json({
+                    ok: false,
+                    msg: `email o password no correcto`
+                });
+            }
+
+            // Antes de guardar la contraseña en la base de datos, voy a 'hashearla' por seguridad, en el endpoint del '/login' habrá que hacer la comparación de la siguiente manera: const isCorrectPassword = bcrypt.compareSync(contraseñaDesdeElFront, contraseñaEnBaseDeDatos) 
+            const isCorrectPassword = bcrypt.compareSync(password, existPhotographer.password);
+
+            if (!isCorrectPassword) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'email o password no correcto',
+            });
+            }
+
+
+            // No quiero que la contraseña le llegue al front, por eso a través de desestructuración saco la contraseña y devuelvo lo demás (sin la contraseña) a través de la variable photographerResponse. He creado un helper para no escribir tanto, está la carpeta llamada helpers
+            const photographerResponse = photographerToObject(existPhotographer);
+
+            res.status(201).json({
+                ok: true,
+                msg: 'contraseña y usuario correctos',
+                photographer: [photographerResponse]
+            })
+
+        } catch (error) {
+
+            console.log(error);
+
+            res.status(500).json({
+                ok: false,
+                msg: 'Error no controlado, notificar al administrador',
+                error,
+            });
+        }
+    };
 
 
     static getById = async (req, res) => {

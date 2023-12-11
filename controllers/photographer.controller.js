@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { PhotographerModel } from "../models/photographer.model.js";
 import { photographerToObject } from "../helpers/photographerToObject.js";
+import { newJWT, valitateJWT } from "../helpers/JWT.helper.js";
 
 export class Photographer {
 
@@ -30,6 +31,7 @@ export class Photographer {
             // Antes de guardar la contraseña en la base de datos, voy a 'hashearla' por seguridad, en el endpoint del '/login' habrá que hacer la comparación de la siguiente manera: const isCorrectPassword = bcrypt.compareSync(contraseñaDesdeElFront, contraseñaEnBaseDeDatos) 
             const securePassword = bcrypt.hashSync(password);
 
+
             const photographer = await PhotographerModel.create({
                 name,
                 surname,
@@ -41,10 +43,13 @@ export class Photographer {
             // No quiero que la contraseña le llegue al front, por eso a través de desestructuración saco la contraseña y devuelvo lo demás (sin la contraseña) a través de la variable photographerResponse. He creado un helper para no escribir tanto, está la carpeta llamada helpers
             const photographerResponse = photographerToObject(photographer);
 
+            const token = newJWT({ id: photographerResponse.id })
+
             res.status(201).json({
                 ok: true,
                 msg: 'Fotógrafo creado correctamente',
-                photographer: [photographerResponse]
+                photographer: [photographerResponse],
+                token
             })
 
         } catch (error) {
@@ -85,20 +90,23 @@ export class Photographer {
             const isCorrectPassword = bcrypt.compareSync(password, existPhotographer.password);
 
             if (!isCorrectPassword) {
-            return res.status(401).json({
-                ok: false,
-                msg: 'email o password no correcto',
-            });
+                return res.status(401).json({
+                    ok: false,
+                    msg: 'email o password no correcto',
+                });
             }
 
 
             // No quiero que la contraseña le llegue al front, por eso a través de desestructuración saco la contraseña y devuelvo lo demás (sin la contraseña) a través de la variable photographerResponse. He creado un helper para no escribir tanto, está la carpeta llamada helpers
             const photographerResponse = photographerToObject(existPhotographer);
 
+            const token = newJWT(photographerResponse);
+
             res.status(201).json({
                 ok: true,
                 msg: 'contraseña y usuario correctos',
-                photographer: [photographerResponse]
+                photographer: [photographerResponse],
+                token
             })
 
         } catch (error) {
@@ -151,13 +159,29 @@ export class Photographer {
 
         const { id } = req.params;
         //? para editar el password, necesitaremos validaciones extra, verdad?
-        const { name, surname, email, /* password */ } = req.body;
+        const { name, surname, email, /* password */ } = req.body; //! Brayan no necesita esto
+        const auth = req.headers?.authorization;
 
+        if (!auth) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'No se encontró token. No estás autorizado.',
+            });
+        }
+
+        const { id: tokenId } = valitateJWT(auth)
+
+        if (id !== tokenId) { // TODO: Añadir validación de role
+            return res.status(401).json({
+                ok: false,
+                msg: 'No puedes editar los datos de otro usuario',
+            });
+        }
 
         try {
             const [existId, existEmail] = await Promise.all([
                 PhotographerModel.findById(id),
-                PhotographerModel.findOne({ email }),
+                PhotographerModel.findOne({ email }), //! Brayan no necesita esto
             ])
 
             if (!existId) {
@@ -167,20 +191,22 @@ export class Photographer {
                 });
             }
 
-            if (existEmail && existId.email !== email) {
-                return res.status(404).json({
-                    ok: false,
-                    msg: `El email: ${email} ya está registrado`
-                });
-            }
+            if (existEmail && existId.email !== email) { //! Brayan no necesita esto
+                return res.status(404).json({ //! Brayan no necesita esto
+                    ok: false, //! Brayan no necesita esto
+                    msg: `El email: ${email} ya está registrado` //! Brayan no necesita esto
+                }); //! Brayan no necesita esto
+            } //! Brayan no necesita esto
 
-            const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { name, surname, email }, { new: true });
+
+            // const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
+            const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { name, surname, email }, { new: true }); //! necesitas solo la línea de arriba
 
             const putPhotographerResponse = photographerToObject(putPhotographer);
 
             res.status(200).json({
                 ok: true,
-                msg: `Fotógrafo con id: ${id}, fue editado`,
+                msg: `Fotógrafo con id: ${id}, fue editado`, //! brayan tiene que cambiar este mensaje
                 photographer: [putPhotographerResponse]
             });
 

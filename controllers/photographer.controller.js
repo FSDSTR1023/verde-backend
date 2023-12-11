@@ -220,4 +220,61 @@ export class Photographer {
         }
     };
 
+    
+    static delete = async (req, res) => {
+        
+        const { id } = req.params;
+        //? para editar el password, necesitaremos validaciones extra, verdad?
+        
+        const auth = req.headers?.authorization;
+        
+        try {
+        if (!auth) {
+            return res.status(401).json({
+                ok: false,
+                msg: 'No se encontró token. No estás autorizado.',
+            });
+        }
+
+        const { id: tokenId } = valitateJWT(auth)
+        
+    if (id !== tokenId) { // TODO: Añadir validación de role
+        return res.status(401).json({
+            ok: false,
+            msg: 'No puedes eliminar los datos de otro usuario',
+        });
+    }
+
+        const existId = await PhotographerModel.findById(id);
+            
+            
+        
+        
+        if (!existId) {
+            return res.status(404).json({
+                ok: false,
+                msg: `El id: ${id} no existe`
+            });
+        }
+        
+        
+        const putPhotographer = await PhotographerModel.findByIdAndUpdate(id, { isDeleted: true }, { new: true }); 
+        const putPhotographerResponse = photographerToObject(putPhotographer);
+        
+        
+        res.status(200).json({
+            ok: true,
+            msg: `Fotógrafo con id: ${id}, fue eliminado`, 
+            photographer: [putPhotographerResponse]
+        });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error no controlado, notificar al administrador',
+            error: error.message
+        });
+    }
+};
 }

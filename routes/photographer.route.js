@@ -11,7 +11,7 @@ routerPhotographer.get('/:id', Photographer.getById);
 
 routerPhotographer.put('/:id', Photographer.edit);
 
-// routerPhotographer.delete('/:id', Photographer.delete);
+routerPhotographer.delete('/:id', Photographer.delete);
 
 
 export default routerPhotographer;

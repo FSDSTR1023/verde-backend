@@ -5,6 +5,8 @@ import routerPhotographer from "./routes/photographer.route.js";
 import cors from "cors";
 import { Photographer } from "./controllers/photographer.controller.js";
 
+
+
 await connectDB();
 
 const app = express();

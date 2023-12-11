@@ -34,7 +34,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["express", "npm:4.18.2"],\
             ["express-validator", "npm:7.0.1"],\
             ["jsonwebtoken", "npm:9.0.2"],\
-            ["mongoose", "npm:8.0.2"],\
+            ["mongoose", "npm:8.0.3"],\
             ["nodemon", "npm:3.0.2"]\
           ],\
           "linkType": "SOFT"\
@@ -108,10 +108,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/node", [\
-        ["npm:20.10.3", {\
-          "packageLocation": "./.yarn/cache/@types-node-npm-20.10.3-d385a9ec0a-34a329494f.zip/node_modules/@types/node/",\
+        ["npm:20.10.4", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-20.10.4-45b062d723-054b296417.zip/node_modules/@types/node/",\
           "packageDependencies": [\
-            ["@types/node", "npm:20.10.3"],\
+            ["@types/node", "npm:20.10.4"],\
             ["undici-types", "npm:5.26.5"]\
           ],\
           "linkType": "HARD"\
@@ -131,7 +131,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-whatwg-url-npm-8.2.2-54c5c24e6c-5dc5afe078.zip/node_modules/@types/whatwg-url/",\
           "packageDependencies": [\
             ["@types/whatwg-url", "npm:8.2.2"],\
-            ["@types/node", "npm:20.10.3"],\
+            ["@types/node", "npm:20.10.4"],\
             ["@types/webidl-conversions", "npm:7.0.3"]\
           ],\
           "linkType": "HARD"\
@@ -1496,10 +1496,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:e116a88d8fce9fbcd2a6eb1ebe8ccc3d6b6b86400f05be3b8487f11502d3ac642ffc8a19793e3f66a92b0fb285736cda10a69471f48b8b99585024a83d6e3db3#npm:6.2.0", {\
-          "packageLocation": "./.yarn/__virtual__/mongodb-virtual-8a255ae9a7/0/cache/mongodb-npm-6.2.0-e710a7f8df-dca058e497.zip/node_modules/mongodb/",\
+        ["virtual:7055564854ee15b036fb28071da8a8bbf19036237b7a4568d50a60d0f30fe17d363a68a054bdcf9de52552e618a6aa13e799a0a4ec75ac2e9a27344737c3bec5#npm:6.2.0", {\
+          "packageLocation": "./.yarn/__virtual__/mongodb-virtual-bdc0aed392/0/cache/mongodb-npm-6.2.0-e710a7f8df-dca058e497.zip/node_modules/mongodb/",\
           "packageDependencies": [\
-            ["mongodb", "virtual:e116a88d8fce9fbcd2a6eb1ebe8ccc3d6b6b86400f05be3b8487f11502d3ac642ffc8a19793e3f66a92b0fb285736cda10a69471f48b8b99585024a83d6e3db3#npm:6.2.0"],\
+            ["mongodb", "virtual:7055564854ee15b036fb28071da8a8bbf19036237b7a4568d50a60d0f30fe17d363a68a054bdcf9de52552e618a6aa13e799a0a4ec75ac2e9a27344737c3bec5#npm:6.2.0"],\
             ["@aws-sdk/credential-providers", null],\
             ["@mongodb-js/saslprep", "npm:1.1.1"],\
             ["@mongodb-js/zstd", null],\
@@ -1549,13 +1549,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mongoose", [\
-        ["npm:8.0.2", {\
-          "packageLocation": "./.yarn/cache/mongoose-npm-8.0.2-e116a88d8f-08fe81ea04.zip/node_modules/mongoose/",\
+        ["npm:8.0.3", {\
+          "packageLocation": "./.yarn/cache/mongoose-npm-8.0.3-7055564854-6431f61fbf.zip/node_modules/mongoose/",\
           "packageDependencies": [\
-            ["mongoose", "npm:8.0.2"],\
+            ["mongoose", "npm:8.0.3"],\
             ["bson", "npm:6.2.0"],\
             ["kareem", "npm:2.5.1"],\
-            ["mongodb", "virtual:e116a88d8fce9fbcd2a6eb1ebe8ccc3d6b6b86400f05be3b8487f11502d3ac642ffc8a19793e3f66a92b0fb285736cda10a69471f48b8b99585024a83d6e3db3#npm:6.2.0"],\
+            ["mongodb", "virtual:7055564854ee15b036fb28071da8a8bbf19036237b7a4568d50a60d0f30fe17d363a68a054bdcf9de52552e618a6aa13e799a0a4ec75ac2e9a27344737c3bec5#npm:6.2.0"],\
             ["mpath", "npm:0.9.0"],\
             ["mquery", "npm:5.0.0"],\
             ["ms", "npm:2.1.3"],\
@@ -2270,7 +2270,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["express", "npm:4.18.2"],\
             ["express-validator", "npm:7.0.1"],\
             ["jsonwebtoken", "npm:9.0.2"],\
-            ["mongoose", "npm:8.0.2"],\
+            ["mongoose", "npm:8.0.3"],\
             ["nodemon", "npm:3.0.2"]\
           ],\
           "linkType": "SOFT"\

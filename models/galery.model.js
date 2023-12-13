@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const GalerySchema = new Schema({
+const GallerySchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -10,6 +10,10 @@ const GalerySchema = new Schema({
         type: String,
         trim: true,
     }],
+    customer: {
+        type: Schema.Types.ObjectId,
+        ref: "Customer"
+    },
     isDeleted: {
         type: Boolean,
         default: false
@@ -18,4 +22,4 @@ const GalerySchema = new Schema({
     { timestamps: true }
 );
 
-export const galeryModel = model("Galerie", GalerySchema);
+export const galleryModel = model("Gallerie", GallerySchema);

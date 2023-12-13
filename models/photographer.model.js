@@ -26,6 +26,10 @@ const photographerSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Customer"
     }],
+    gallery: [{
+        type: Schema.Types.ObjectId,
+        ref: "Gallerie"
+    }],
     isDeleted: {
         type: Boolean,
         default: false

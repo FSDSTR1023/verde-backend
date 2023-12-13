@@ -162,23 +162,24 @@ export class Photographer {
         const { name, surname, email, /* password */ } = req.body; //! Brayan no necesita esto
         const auth = req.headers?.authorization;
 
-        if (!auth) {
-            return res.status(401).json({
-                ok: false,
-                msg: 'No se encontró token. No estás autorizado.',
-            });
-        }
-
-        const { id: tokenId } = valitateJWT(auth)
-
-        if (id !== tokenId) { // TODO: Añadir validación de role
-            return res.status(401).json({
-                ok: false,
-                msg: 'No puedes editar los datos de otro usuario',
-            });
-        }
 
         try {
+            if (!auth) {
+                return res.status(401).json({
+                    ok: false,
+                    msg: 'No se encontró token. No estás autorizado.',
+                });
+            }
+
+            const { id: tokenId } = valitateJWT(auth)
+
+            if (id !== tokenId) { // TODO: Añadir validación de role
+                return res.status(401).json({
+                    ok: false,
+                    msg: 'No puedes editar los datos de otro usuario',
+                });
+            }
+
             const [existId, existEmail] = await Promise.all([
                 PhotographerModel.findById(id),
                 PhotographerModel.findOne({ email }), //! Brayan no necesita esto

@@ -24,7 +24,7 @@ const photographerSchema = new Schema({
     },
     customers: [{
         type: Schema.Types.ObjectId,
-        ref: "Customer"
+        ref: "Client"
     }],
     gallery: [{
         type: Schema.Types.ObjectId,

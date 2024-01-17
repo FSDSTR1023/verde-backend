@@ -12,7 +12,7 @@ const GallerySchema = new Schema({
     }],
     customer: {
         type: Schema.Types.ObjectId,
-        ref: "Customer"
+        ref: "Client"
     },
     isDeleted: {
         type: Boolean,

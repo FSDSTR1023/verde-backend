@@ -30,6 +30,7 @@ const photographerSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Gallerie"
     }],
+    // TODO: softdelete es una fecha
     isDeleted: {
         type: Boolean,
         default: false

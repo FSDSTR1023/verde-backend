@@ -12,9 +12,7 @@ export const checkJWT = async (req = request, res = response, next) => {
   }
 
   try {
-    const { id } = await validateJWT(auth);
-
-    console.log("soy md y el id es:", id);
+    const { id } = validateJWT(auth);
 
     req.photographerId = id;
 

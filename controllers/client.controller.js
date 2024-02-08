@@ -2,10 +2,6 @@ import { request, response } from "express";
 import { ClientModel } from "../models/client.model.js";
 import { clientToObject } from "../helpers/clientToObject.js";
 import { PhotographerModel } from "../models/photographer.model.js";
-import { request, response } from "express";
-import { ClientModel } from "../models/client.model.js";
-import { clientToObject } from "../helpers/clientToObject.js";
-import { PhotographerModel } from "../models/photographer.model.js";
 import { photographerToObject } from "../helpers/photographerToObject.js";
 
 export class Client {
@@ -27,7 +23,7 @@ export class Client {
 
       const clientResponse = clientToObject(clientCreated);
 
-      PhotographerModel.findByIdAndUpdate(photographerId, {
+      await PhotographerModel.findByIdAndUpdate(photographerId, {
         $push: { clients: clientResponse.id },
       });
 

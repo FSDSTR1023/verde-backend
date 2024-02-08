@@ -3,6 +3,7 @@ import { PhotographerServices } from '../services/photographer.services.js';
 import { galleryModel } from '../models/gallery.model.js';
 import { ClientModel } from '../models/client.model.js';
 import { galleryToObject } from '../helpers/galleryToObject.js';
+import { PhotographerModel } from '../models/photographer.model.js';
 
 export class GalleryContoller {
 
@@ -35,12 +36,21 @@ export class GalleryContoller {
             const newGallery = await galleryModel.create(galleryData);
             newGallery.save();
 
-            const gallery = galleryToObject(newGallery);
+            const galleryObject = galleryToObject(newGallery);
+
+            await Promise.all([
+                PhotographerModel.findByIdAndUpdate(photographerId, {
+                    $push: { gallery: galleryObject.id }
+                }),
+                ClientModel.findByIdAndUpdate(clientInfo.id, {
+                    $push: { gallery: galleryObject.id }
+                }),
+            ]);
 
             res.status(201).json({
                 ok: true,
                 msg: 'Galería creada',
-                gallery
+                gallery: galleryObject
             })
 
         } catch (error) {

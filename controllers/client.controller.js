@@ -79,6 +79,48 @@ export class Client {
 
   }
 
+
+  static getById = async (req = request, res = response) => {
+
+    const photographerId = req.photographerId;
+
+    const clientId = req.params.id;
+
+    console.log({ clientId });
+
+    if (!clientId) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'No se proporcionó el id del cliente'
+      })
+    }
+
+    // TODO: verificar que el id del cliente le pertenece al fotógrafo
+
+    try {
+
+      const client = await ClientModel.findById(clientId);
+
+      const clientResponse = clientToObject(client);
+
+      res.status(201).json({
+        ok: true,
+        msg: 'Tus clientes son:',
+        clientResponse
+      });
+
+    } catch (error) {
+
+      res.status(400).json({
+        ok: false,
+        msg: 'algo salió mal',
+        error: error.message
+      })
+
+    }
+
+  }
+
   // TODO:
   // static getById
   // static edit

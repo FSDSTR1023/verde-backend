@@ -8,6 +8,8 @@ routerClient.post('/register', checkJWT, Client.register);
 
 routerClient.get('/getAll', checkJWT, Client.getAll);
 
+routerClient.get('/get/:id', checkJWT, Client.getById);
+
 // routerClient.put('/:id',);
 
 // routerClient.delete('/:id',);

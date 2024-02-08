@@ -4,6 +4,7 @@ import { galleryModel } from '../models/gallery.model.js';
 import { ClientModel } from '../models/client.model.js';
 import { galleryToObject } from '../helpers/galleryToObject.js';
 import { PhotographerModel } from '../models/photographer.model.js';
+import { photographerToObject } from '../helpers/photographerToObject.js';
 
 export class GalleryContoller {
 
@@ -58,6 +59,36 @@ export class GalleryContoller {
                 ok: false,
                 msg: "hubo un error al crear la galería"
             })
+        }
+
+    }
+
+    static getAll = async (req = request, res = response) => {
+
+        const photographerId = req.photographerId;
+
+        try {
+
+            const photographer = await PhotographerModel.findById(photographerId).populate('gallery').exec();
+            const photograperResponse = photographerToObject(photographer);
+
+            res.status(200).json({
+                ok: true,
+                msg: 'Tus galerías son',
+                galeries: photograperResponse.gallery
+            })
+
+
+
+        } catch (error) {
+
+            console.trace(error);
+
+            res.status(400).json({
+                ok: true,
+                msg: 'Algo salió mal',
+                error
+            });
         }
 
     }

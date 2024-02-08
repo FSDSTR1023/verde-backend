@@ -6,7 +6,7 @@ const routerGallery = Router();
 
 routerGallery.post('/create', checkJWT, GalleryContoller.create);
 
-// routerClient.post('/login',);
+routerGallery.get('/getAll', checkJWT, GalleryContoller.getAll);
 
 // routerClient.get('/:id',);
 

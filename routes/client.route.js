@@ -6,9 +6,7 @@ const routerClient = Router();
 
 routerClient.post('/register', checkJWT, Client.register);
 
-// routerClient.post('/login',);
-
-// routerClient.get('/:id',);
+routerClient.get('/getAll', checkJWT, Client.getAll);
 
 // routerClient.put('/:id',);
 

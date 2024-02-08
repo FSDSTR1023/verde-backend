@@ -6,14 +6,21 @@ const GallerySchema = new Schema({
         required: true,
         trim: true,
     },
+    client: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+    minPics: {
+        type: Number,
+    },
+    totalPrice: {
+        type: Number,
+    },
     photos: [{
         type: String,
         trim: true,
+        required: true,
     }],
-    customer: {
-        type: Schema.Types.ObjectId,
-        ref: "Client"
-    },
     isDeleted: {
         type: Boolean,
         default: false

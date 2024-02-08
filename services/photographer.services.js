@@ -1,5 +1,5 @@
-import { photographerToObject } from "../helpers/photographerToObject";
-import { PhotographerModel } from "../models/photographer.model";
+import { photographerToObject } from "../helpers/photographerToObject.js";
+import { PhotographerModel } from "../models/photographer.model.js";
 
 export class PhotographerServices {
 

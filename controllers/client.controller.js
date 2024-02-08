@@ -2,6 +2,7 @@ import { request, response } from 'express'
 import { ClientModel } from '../models/client.model.js';
 import { clientToObject } from '../helpers/clientToObject.js';
 import { PhotographerModel } from '../models/photographer.model.js';
+import { photographerToObject } from '../helpers/photographerToObject.js';
 
 export class Client {
 
@@ -43,6 +44,34 @@ export class Client {
       res.status(400).json({
         ok: false,
         msg: 'no se pudo crear el cliente',
+        error: error.message
+      })
+
+    }
+
+  }
+
+  static getAll = async (req = request, res = response) => {
+
+    const photographerId = req.photographerId;
+
+    try {
+
+      const photographer = await PhotographerModel.findById(photographerId).populate('clients', ['email', 'name']).exec();
+
+      const photographerResponse = photographerToObject(photographer)
+
+      res.status(201).json({
+        ok: true,
+        msg: 'Tus clientes son:',
+        photographerResponse
+      });
+
+    } catch (error) {
+
+      res.status(400).json({
+        ok: false,
+        msg: 'algo salió mal',
         error: error.message
       })
 

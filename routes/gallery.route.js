@@ -8,6 +8,10 @@ routerGallery.post('/create', checkJWT, GalleryContoller.create);
 
 routerGallery.get('/getAll', checkJWT, GalleryContoller.getAll);
 
+routerGallery.get('/get/:id', checkJWT, GalleryContoller.getById);
+
+// TODO: Hacer el get by Id para que el front mueste el OPENGALLERY
+
 // routerClient.get('/:id',);
 
 // routerClient.put('/:id',);

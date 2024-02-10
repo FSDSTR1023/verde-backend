@@ -110,8 +110,6 @@ export class GalleryContoller {
 
             const gallery = await galleryModel.findById(id).populate('client').exec();
 
-            console.log(gallery);
-
             const galleryResponse = galleryToObject(gallery);
 
             res.status(200).json({

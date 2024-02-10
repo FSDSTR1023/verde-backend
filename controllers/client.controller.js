@@ -57,7 +57,7 @@ export class Client {
 
     try {
 
-      const photographer = await PhotographerModel.findById(photographerId).populate('clients', ['email', 'name']).exec();
+      const photographer = await PhotographerModel.findById(photographerId).populate('clients').exec();
 
       const photographerResponse = photographerToObject(photographer)
 
@@ -85,8 +85,6 @@ export class Client {
     const photographerId = req.photographerId;
 
     const clientId = req.params.id;
-
-    console.log({ clientId });
 
     if (!clientId) {
       return res.status(400).json({

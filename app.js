@@ -14,8 +14,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 
+
+app.use("/check", checkJWT)
 app.use("/photographer", routerPhotographer);
 app.use("/client", routerClient);
 app.use("/gallery", routerGallery);

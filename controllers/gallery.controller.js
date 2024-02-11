@@ -62,7 +62,7 @@ export class GalleryContoller {
         }
 
     }
-
+    //
     static getAll = async (req = request, res = response) => {
 
         const photographerId = req.photographerId;

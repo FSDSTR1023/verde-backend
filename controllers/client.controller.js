@@ -46,7 +46,7 @@ export class Client {
 
     try {
       const photographer = await PhotographerModel.findById(photographerId)
-        .populate("clients", ["email", "name"])
+        .populate("clients")
         .exec();
 
       const photographerResponse = photographerToObject(photographer);
@@ -55,6 +55,39 @@ export class Client {
         ok: true,
         msg: "Tus clientes son:",
         photographerResponse,
+      });
+    } catch (error) {
+      res.status(400).json({
+        ok: false,
+        msg: "algo salió mal",
+        error: error.message,
+      });
+    }
+  };
+
+  static getById = async (req = request, res = response) => {
+    const photographerId = req.photographerId;
+
+    const clientId = req.params.id;
+
+    if (!clientId) {
+      return res.status(400).json({
+        ok: false,
+        msg: "No se proporcionó el id del cliente",
+      });
+    }
+
+    // TODO: verificar que el id del cliente le pertenece al fotógrafo
+
+    try {
+      const client = await ClientModel.findById(clientId);
+
+      const clientResponse = clientToObject(client);
+
+      res.status(201).json({
+        ok: true,
+        msg: "Tus clientes son:",
+        clientResponse,
       });
     } catch (error) {
       res.status(400).json({

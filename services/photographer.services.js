@@ -17,9 +17,9 @@ export class PhotographerServices {
 
       return photographerObject;
 
-    } catch (e) {
+    } catch (error) {
 
-      console.log("🙀 Error: ", e);
+      console.log(error);
 
     }
 

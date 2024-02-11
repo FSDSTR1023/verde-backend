@@ -6,7 +6,12 @@ const routerGallery = Router();
 
 routerGallery.post('/create', checkJWT, GalleryContoller.create);
 
-// routerClient.post('/login',);
+routerGallery.get('/getAll', checkJWT, GalleryContoller.getAll);
+
+routerGallery.get('/get/:id', checkJWT, GalleryContoller.getById);
+routerGallery.get('/get/client/:id', GalleryContoller.getByIdClient);
+
+// TODO: Hacer el get by Id para que el front mueste el OPENGALLERY
 
 // routerClient.get('/:id',);
 

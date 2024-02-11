@@ -115,11 +115,9 @@ export class Photographer {
 
   static getById = async (req, res) => {
     const { id } = req.params;
-    console.log({ id });
 
     try {
       const getPhotographer = await PhotographerModel.findById(id);
-      console.log("photographer found", getPhotographer);
 
       if (!getPhotographer) {
         return res.status(404).json({

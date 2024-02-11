@@ -133,4 +133,43 @@ export class GalleryContoller {
 
     }
 
+    static getByIdClient = async (req = request, res = response) => {
+
+        const id = req.params.id
+
+        if (!id) {
+            res.status(404).json({
+                ok: true,
+                msg: 'No se ha proporcionado el ID de la galería',
+            })
+
+        }
+
+        try {
+
+            const gallery = await galleryModel.findById(id);
+
+            const galleryResponse = galleryToObject(gallery);
+
+            res.status(200).json({
+                ok: true,
+                msg: `Galería con id: ${id}`,
+                gallery: galleryResponse
+            })
+
+
+
+        } catch (error) {
+
+            console.trace(error);
+
+            res.status(400).json({
+                ok: false,
+                msg: 'Algo salió mal',
+                error
+            });
+        }
+
+    }
+
 }

@@ -62,7 +62,43 @@ export class GalleryContoller {
         }
 
     }
-    //
+
+    static addPhoto = async (req = request, res = response) => {
+
+        const id = req.params.id
+        const { photos } = req.body
+
+        console.log(photos);
+
+        try {
+
+            const newGallery = await galleryModel.findByIdAndUpdate(id, {
+                $push: { photos }
+            });
+
+            const galleryResponse = galleryToObject(newGallery);
+
+            res.status(200).json({
+                ok: true,
+                msg: `Galería con id: ${id}`,
+                gallery: galleryResponse
+            })
+
+
+        } catch (error) {
+
+            console.trace(error);
+
+            res.status(400).json({
+                ok: false,
+                msg: 'Algo salió mal',
+                error
+            });
+
+        }
+
+    }
+
     static getAll = async (req = request, res = response) => {
 
         const photographerId = req.photographerId;
@@ -169,6 +205,43 @@ export class GalleryContoller {
                 error
             });
         }
+
+    }
+
+    static deletePhotos = async (req = request, res = response) => {
+
+        const id = req.params.id
+        const { newGal } = req.body
+
+        console.log(newGal);
+
+        try {
+
+            const newGallery = await galleryModel.findByIdAndUpdate(id, {
+                photos: newGal
+            });
+
+            const galleryResponse = galleryToObject(newGallery);
+
+            res.status(200).json({
+                ok: true,
+                msg: `Galería con id: ${id}`,
+                gallery: galleryResponse
+            })
+
+
+        } catch (error) {
+
+            console.trace(error);
+
+            res.status(400).json({
+                ok: false,
+                msg: 'Algo salió mal',
+                error
+            });
+
+        }
+
 
     }
 

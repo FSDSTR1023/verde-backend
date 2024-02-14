@@ -9,11 +9,12 @@ routerGallery.post('/create', checkJWT, GalleryContoller.create);
 routerGallery.get('/getAll', checkJWT, GalleryContoller.getAll);
 
 routerGallery.get('/get/:id', checkJWT, GalleryContoller.getById);
+
 routerGallery.get('/get/client/:id', GalleryContoller.getByIdClient);
 
-// TODO: Hacer el get by Id para que el front mueste el OPENGALLERY
+routerGallery.put('/delete/:id', checkJWT, GalleryContoller.deletePhotos);
 
-// routerClient.get('/:id',);
+routerGallery.put('/add/:id', checkJWT, GalleryContoller.addPhoto);
 
 // routerClient.put('/:id',);
 

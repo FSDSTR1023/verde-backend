@@ -99,6 +99,38 @@ export class GalleryContoller {
 
     }
 
+    static editGallery = async (req = request, res = response) => {
+
+        const id = req.params.id;
+        const info = req.body;
+
+        try {
+
+            const newGallery = await galleryModel.findByIdAndUpdate(id, info);
+
+            const galleryResponse = galleryToObject(newGallery);
+
+            res.status(200).json({
+                ok: true,
+                msg: `Galería con id: ${id} editada`,
+                gallery: galleryResponse
+            })
+
+
+        } catch (error) {
+
+            console.trace(error);
+
+            res.status(400).json({
+                ok: false,
+                msg: 'Algo salió mal',
+                error
+            });
+
+        }
+
+    }
+
     static getAll = async (req = request, res = response) => {
 
         const photographerId = req.photographerId;
@@ -227,6 +259,51 @@ export class GalleryContoller {
                 ok: true,
                 msg: `Galería con id: ${id}`,
                 gallery: galleryResponse
+            })
+
+
+        } catch (error) {
+
+            console.trace(error);
+
+            res.status(400).json({
+                ok: false,
+                msg: 'Algo salió mal',
+                error
+            });
+
+        }
+
+
+    }
+    static deleteGallery = async (req = request, res = response) => {
+
+        const { ids } = req.body
+
+        console.log(ids);
+
+        const promises = [];
+
+        try {
+
+
+            for (let i = 0; i < ids.length; i++) {
+
+                const id = ids[i];
+
+                const promise = galleryModel.findByIdAndDelete(id);
+
+                promises.push(promise);
+            }
+
+            const deleted = await Promise.all(promises);
+
+            // const galleryResponse = galleryToObject(newGallery);
+
+            res.status(200).json({
+                ok: true,
+                msg: `Galerías eliminadas`,
+                deleted
             })
 
 

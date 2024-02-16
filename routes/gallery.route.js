@@ -16,6 +16,10 @@ routerGallery.put('/delete/:id', checkJWT, GalleryContoller.deletePhotos);
 
 routerGallery.put('/add/:id', checkJWT, GalleryContoller.addPhoto);
 
+routerGallery.put('/edit/:id', checkJWT, GalleryContoller.editGallery);
+
+routerGallery.delete('/delete', checkJWT, GalleryContoller.deleteGallery);
+
 // routerClient.put('/:id',);
 
 // routerClient.delete('/:id',);

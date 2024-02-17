@@ -11,8 +11,6 @@ export class Email {
         // https://github.com/sendgrid/sendgrid-nodejs
         // javascript
 
-        // piclery: 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
-
         // instalar paquete: npm install --save @sendgrid/mail
 
         // const sgMail = require('@sendgrid/mail')

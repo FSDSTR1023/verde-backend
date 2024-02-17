@@ -1,5 +1,5 @@
 import "dotenv/config";
-import express, { application } from "express";
+import express from "express";
 import { connectDB } from "./database/mongo.database.js";
 import routerPhotographer from "./routes/photographer.route.js";
 import cors from "cors";
@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import routerClient from './routes/client.route.js';
 import { checkJWT } from "./middlewares/checkJWT.middleware.js";
 import routerGallery from './routes/gallery.route.js';
+import routerEmail from './routes/email.route.js';
 
 await connectDB();
 
@@ -21,6 +22,7 @@ app.use("/check", checkJWT)
 app.use("/photographer", routerPhotographer);
 app.use("/client", routerClient);
 app.use("/gallery", routerGallery);
+app.use("/email", routerEmail)
 
 const PORT = process.env.PORT || 3000;
 

@@ -5,6 +5,7 @@ import { ClientModel } from '../models/client.model.js';
 import { galleryToObject } from '../helpers/galleryToObject.js';
 import { PhotographerModel } from '../models/photographer.model.js';
 import { photographerToObject } from '../helpers/photographerToObject.js';
+import { clientToObject } from '../helpers/clientToObject.js';
 
 export class GalleryContoller {
 
@@ -43,9 +44,9 @@ export class GalleryContoller {
                 PhotographerModel.findByIdAndUpdate(photographerId, {
                     $push: { gallery: galleryObject.id }
                 }),
-                ClientModel.findByIdAndUpdate(clientInfo.id, {
-                    $push: { gallery: galleryObject.id }
-                }),
+                // ClientModel.findByIdAndUpdate(clientInfo.id, {
+                //     $push: { gallery: galleryObject.id }
+                // }),
             ]);
 
             res.status(201).json({
@@ -67,8 +68,6 @@ export class GalleryContoller {
 
         const id = req.params.id
         const { photos } = req.body
-
-        console.log(photos);
 
         try {
 
@@ -102,11 +101,11 @@ export class GalleryContoller {
     static editGallery = async (req = request, res = response) => {
 
         const id = req.params.id;
-        const info = req.body;
+        const data = req.body;
 
         try {
 
-            const newGallery = await galleryModel.findByIdAndUpdate(id, info);
+            const newGallery = await galleryModel.findByIdAndUpdate(id, data);
 
             const galleryResponse = galleryToObject(newGallery);
 
@@ -193,9 +192,9 @@ export class GalleryContoller {
             console.trace(error);
 
             res.status(400).json({
-                ok: true,
+                ok: false,
                 msg: 'Algo salió mal',
-                error
+                error: error.message
             });
         }
 
@@ -215,14 +214,14 @@ export class GalleryContoller {
 
         try {
 
-            const gallery = await galleryModel.findById(id);
+            const gallery = await galleryModel.find({ client: id });
 
             const galleryResponse = galleryToObject(gallery);
 
             res.status(200).json({
                 ok: true,
-                msg: `Galería con id: ${id}`,
-                gallery: galleryResponse
+                msg: `Galerías del cliente: ${id}`,
+                galleries: galleryResponse
             })
 
 
@@ -244,8 +243,6 @@ export class GalleryContoller {
 
         const id = req.params.id
         const { newGal } = req.body
-
-        console.log(newGal);
 
         try {
 
@@ -278,14 +275,13 @@ export class GalleryContoller {
     }
     static deleteGallery = async (req = request, res = response) => {
 
-        const { ids } = req.body
+        const photographerId = req.photographerId;
 
-        console.log(ids);
+        const { ids } = req.body
 
         const promises = [];
 
         try {
-
 
             for (let i = 0; i < ids.length; i++) {
 
@@ -296,14 +292,16 @@ export class GalleryContoller {
                 promises.push(promise);
             }
 
-            const deleted = await Promise.all(promises);
-
-            // const galleryResponse = galleryToObject(newGallery);
+            await Promise.all([
+                ...promises,
+                PhotographerModel.findByIdAndUpdate(photographerId, {
+                    $pull: { gallery: { $in: ids } }
+                })
+            ]);
 
             res.status(200).json({
                 ok: true,
                 msg: `Galerías eliminadas`,
-                deleted
             })
 
 

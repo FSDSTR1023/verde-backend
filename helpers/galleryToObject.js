@@ -1,9 +1,22 @@
 export const galleryToObject = (galleryFromMongo) => {
 
-    const { _id: id, __v, ...remainder } = galleryFromMongo.toObject();
+    if (!galleryFromMongo.length) {
 
-    return {
-        id,
-        ...remainder
+        const { _id: id, __v, ...remainder } = galleryFromMongo.toObject();
+
+        return {
+            id,
+            ...remainder
+        }
     }
+
+    return galleryFromMongo.map(mongo => {
+        const { _id: id, __v, ...remainder } = mongo.toObject();
+
+        return {
+            id,
+            ...remainder
+        }
+    });
+
 }

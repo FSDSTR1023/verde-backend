@@ -8,9 +8,9 @@ routerGallery.post('/create', checkJWT, GalleryContoller.create);
 
 routerGallery.get('/getAll', checkJWT, GalleryContoller.getAll);
 
-routerGallery.get('/get/:id', checkJWT, GalleryContoller.getById);
+routerGallery.get('/get/:id', GalleryContoller.getById);
 
-routerGallery.get('/get/client/:id', GalleryContoller.getByIdClient);
+routerGallery.get('/get/client/:id', checkJWT, GalleryContoller.getByIdClient);
 
 routerGallery.put('/delete/:id', checkJWT, GalleryContoller.deletePhotos);
 

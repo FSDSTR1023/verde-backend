@@ -24,10 +24,6 @@ const clientSchema = new Schema({
     type: String,
     required: true,
   },
-  gallery: [{
-    type: Schema.Types.ObjectId,
-    ref: "Gallerie"
-  }],
   isDeleted: {
     type: Boolean,
     default: false

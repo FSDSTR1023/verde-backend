@@ -14,7 +14,7 @@ export class GalleryContoller {
 
         const photographerId = req.photographerId;
 
-        const { title, client, photos, minPics, totalPrice } = req.body;
+        const { title, client, photos, minPics, totalPrice, singlePrice } = req.body;
 
         try {
 
@@ -32,7 +32,8 @@ export class GalleryContoller {
                 client,
                 photos,
                 minPics,
-                totalPrice
+                totalPrice,
+                singlePrice
             }
 
             const newGallery = await galleryModel.create(galleryData);

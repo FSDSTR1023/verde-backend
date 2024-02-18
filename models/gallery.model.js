@@ -14,6 +14,9 @@ const GallerySchema = new Schema({
     minPics: {
         type: Number,
     },
+    singlePrice: {
+        type: Number,
+    },
     totalPrice: {
         type: Number,
     },

@@ -8,11 +8,10 @@ routerClient.post('/register', checkJWT, Client.register);
 
 routerClient.get('/getAll', checkJWT, Client.getAll);
 
-routerClient.get('/get/:id', checkJWT, Client.getById);
+routerClient.get('/:id', checkJWT, Client.getById);
 
-// routerClient.put('/:id',);
+routerClient.put('/:id', checkJWT, Client.edit);
 
-// routerClient.delete('/:id',);
-
+routerClient.delete('/:id', checkJWT, Client.delete);
 
 export default routerClient;

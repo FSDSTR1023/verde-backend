@@ -19,7 +19,7 @@ export class PhotographerServices {
 
     } catch (error) {
 
-      console.log(error);
+      console.trace(error);
 
     }
 

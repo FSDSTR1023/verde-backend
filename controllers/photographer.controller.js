@@ -48,8 +48,6 @@ export class Photographer {
         token,
       });
     } catch (error) {
-      console.log(error);
-
       res.status(500).json({
         ok: false,
         msg: "Error no controlado, notificar al administrador",
@@ -103,8 +101,6 @@ export class Photographer {
         token,
       });
     } catch (error) {
-      console.log(error);
-
       res.status(500).json({
         ok: false,
         msg: "Error no controlado, notificar al administrador",
@@ -133,7 +129,7 @@ export class Photographer {
         photographer: [getPhotographerResponse],
       });
     } catch (error) {
-      console.log(error);
+      console.trace(error);
 
       res.status(500).json({
         ok: false,
@@ -203,7 +199,7 @@ export class Photographer {
         photographer: [putPhotographerResponse],
       });
     } catch (error) {
-      console.log(error);
+      console.trace(error);
       res.status(500).json({
         ok: false,
         msg: "Error no controlado, notificar al administrador",
@@ -258,7 +254,7 @@ export class Photographer {
         photographer: [putPhotographerResponse],
       });
     } catch (error) {
-      console.log(error);
+      console.trace(error);
       res.status(500).json({
         ok: false,
         msg: "Error no controlado, notificar al administrador",

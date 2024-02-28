@@ -66,8 +66,6 @@ export class Client {
   };
 
   static getById = async (req = request, res = response) => {
-    const photographerId = req.photographerId;
-
     const clientId = req.params.id;
 
     if (!clientId) {
@@ -87,6 +85,74 @@ export class Client {
       res.status(201).json({
         ok: true,
         msg: "Tus clientes son:",
+        clientResponse,
+      });
+    } catch (error) {
+      res.status(400).json({
+        ok: false,
+        msg: "algo salió mal",
+        error: error.message,
+      });
+    }
+  };
+
+  static edit = async (req = request, res = response) => {
+    const { id: clientId } = req.params;
+    const data = req.body;
+
+    if (!clientId) {
+      return res.status(400).json({
+        ok: false,
+        msg: "No se proporcionó el id del cliente",
+      });
+    }
+
+    // TODO: verificar que el id del cliente le pertenece al fotógrafo
+
+    try {
+      const client = await ClientModel.findByIdAndUpdate(clientId, data);
+
+      const clientResponse = clientToObject(client);
+
+      res.status(201).json({
+        ok: true,
+        msg: "Tus clientes son:",
+        clientResponse,
+      });
+    } catch (error) {
+      res.status(400).json({
+        ok: false,
+        msg: "algo salió mal",
+        error: error.message,
+      });
+    }
+  };
+
+  static delete = async (req = request, res = response) => {
+    const photographerId = req.photographerId;
+    const clientId = req.params.id;
+
+    if (!clientId) {
+      return res.status(400).json({
+        ok: false,
+        msg: "No se proporcionó el id del cliente",
+      });
+    }
+
+    // TODO: verificar que el id del cliente le pertenece al fotógrafo
+
+    try {
+      const client = await ClientModel.findByIdAndDelete(clientId);
+
+      const clientResponse = clientToObject(client);
+
+      await PhotographerModel.findByIdAndUpdate(photographerId, {
+        $pull: { clients: clientId },
+      });
+
+      res.status(201).json({
+        ok: true,
+        msg: "cliente eliminado:",
         clientResponse,
       });
     } catch (error) {

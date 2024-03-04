@@ -20,8 +20,13 @@ export class Email {
         const msg = {
             to: email, // Change to your recipient
             from: 'appmygallery@gmail.com', // Change to your verified sender
-            subject: 'Sending with SendGrid is Fun',
-            html: `Haz click <a href="${link}" target="_blank" rel="noopener noreferrer">aquí</a> para ver tu galería y comprar 🤑 tus fotos`,
+            subject: '¡Ya estás listas tus fotos!',
+            html: `¡Hola! Aquí tienes el enlace donde podrás seleccionar y descargar tus fotos: <a href=${link} target="_blank" rel="noopener noreferrer">${link}</a>
+            <br>
+            ¡Que las disfrutes!
+
+            Gracias por contar con <a href="https://piclery.netlify.app" target="_blank">Piclery</a>.
+            `,
         }
 
         sgMail

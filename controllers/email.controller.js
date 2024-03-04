@@ -27,17 +27,22 @@ export class Email {
         sgMail
             .send(msg)
             .then(() => {
-                console.log('Email sent')
+                console.log('Email sent');
             })
             .catch((error) => {
-                console.error(error)
+                console.error(error);
+                res.status(400).json({
+                    ok: false,
+                    msg: "Algo falló en el envío. Revisa el correo de destino",
+                    error
+                })
             })
 
         const data = req.body;
 
         res.status(200).json({
             ok: true,
-            msg: "todo bien",
+            msg: "Email enviado correctamente",
             data
         })
     }
